@@ -20,7 +20,7 @@ public class App extends Application {
     @Override
     public void start(Stage stage) throws IOException {
 
-        scene = new Scene(loadFXML("primary"));
+        scene = new Scene(loadFXML("login"));
 
         JMetro jmetro = new JMetro(Style.DARK);
         jmetro.setAutomaticallyColorPanes(true);
