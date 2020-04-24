@@ -1,8 +1,9 @@
-package org.mana;
+package org.mana.controller;
 
 import javafx.fxml.FXML;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
+import org.mana.App;
 
 import java.io.IOException;
 
