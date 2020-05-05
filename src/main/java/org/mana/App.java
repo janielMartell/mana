@@ -7,6 +7,7 @@ import javafx.scene.Scene;
 import javafx.stage.Stage;
 import jfxtras.styles.jmetro.JMetro;
 import jfxtras.styles.jmetro.Style;
+import org.mana.controller.LoginController;
 
 import java.io.IOException;
 
@@ -19,8 +20,9 @@ public class App extends Application {
 
     @Override
     public void start(Stage stage) throws IOException {
+        String view = new LoginController().getView();
 
-        scene = new Scene(loadFXML("login"));
+        scene = new Scene(loadFXML(view));
 
         JMetro jmetro = new JMetro(Style.DARK);
         jmetro.setAutomaticallyColorPanes(true);
@@ -35,7 +37,7 @@ public class App extends Application {
     }
 
     private static Parent loadFXML(String fxml) throws IOException {
-        FXMLLoader fxmlLoader = new FXMLLoader(App.class.getResource(fxml + ".fxml"));
+        FXMLLoader fxmlLoader = new FXMLLoader(App.class.getResource(fxml));
         return fxmlLoader.load();
     }
 
