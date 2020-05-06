@@ -16,6 +16,7 @@ import org.mana.App;
 import org.mana.db.datasource.DataSource;
 import org.mana.db.datasource.HikariCPDataSource;
 import org.mana.db.entity.City;
+import org.mana.db.entity.Role;
 import org.mana.db.entity.User;
 import org.mana.db.model.Model;
 import org.mana.db.model.UserModel;
@@ -86,7 +87,7 @@ public class RegisterController implements Controller {
 
         try {
             Model userModel = new UserModel(new HikariCPDataSource());
-            userModel.save(new User(username, password, firstName, lastName, Date.valueOf(dob), new City(cityName)));
+            userModel.save(new User(username, password, firstName, lastName, Date.valueOf(dob), new City(cityName), new Role("user")));
         } catch (EntityAlreadyExistsException ex) {
             Alert alert = new Alert(Alert.AlertType.ERROR);
             alert.setHeaderText("UsernameTaken");
