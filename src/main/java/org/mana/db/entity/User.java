@@ -16,11 +16,12 @@ public class User implements Entity {
     public Date dob;
 
     public City city;
+    public Role role;
 
-    public User(String username, String password, String firstName, String lastName, Date dob, City city) throws IllegalArgumentException {
+    public User(String username, String password, String firstName, String lastName, Date dob, City city, Role role) throws IllegalArgumentException {
         FieldValidator val = new FieldValidator();
 
-        if (val.isNullOrWhitespace(username) || val.isNullOrWhitespace(password) || val.isNullOrWhitespace(firstName) || val.isNullOrWhitespace(lastName) || city == null || dob == null) {
+        if (val.isNullOrWhitespace(username) || val.isNullOrWhitespace(password) || val.isNullOrWhitespace(firstName) || val.isNullOrWhitespace(lastName) || city == null || dob == null || role == null) {
             throw new IllegalArgumentException();
         }
 
@@ -30,6 +31,24 @@ public class User implements Entity {
         this.lastName = lastName;
         this.dob = dob;
         this.city = city;
+        this.role = role;
+    }
+
+    public User(int id, String username, String password, String firstName, String lastName, Date dob, City city, Role role) throws IllegalArgumentException {
+        FieldValidator val = new FieldValidator();
+
+        if (val.isNullOrWhitespace(username) || val.isNullOrWhitespace(password) || val.isNullOrWhitespace(firstName) || val.isNullOrWhitespace(lastName) || city == null || dob == null || role == null) {
+            throw new IllegalArgumentException();
+        }
+
+        this.id = id;
+        this.username = username;
+        this.password = password;
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.dob = dob;
+        this.city = city;
+        this.role = role;
     }
 
     public User() {
