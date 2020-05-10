@@ -8,6 +8,7 @@ import javafx.stage.Stage;
 import jfxtras.styles.jmetro.JMetro;
 import jfxtras.styles.jmetro.Style;
 import org.mana.controller.LoginController;
+import org.mana.controller.ParametrizedController;
 
 import java.io.IOException;
 
@@ -38,6 +39,16 @@ public class App extends Application {
 
     private static Parent loadFXML(String fxml) throws IOException {
         FXMLLoader fxmlLoader = new FXMLLoader(App.class.getResource(fxml));
+        return fxmlLoader.load();
+    }
+
+    public static void setRoot(String fxml, ParametrizedController controller) throws IOException {
+        scene.setRoot(loadFXML(fxml, controller));
+    }
+
+    private static Parent loadFXML(String fxml, ParametrizedController controller) throws IOException {
+        FXMLLoader fxmlLoader = new FXMLLoader(App.class.getResource(fxml));
+        fxmlLoader.setController(controller);
         return fxmlLoader.load();
     }
 
