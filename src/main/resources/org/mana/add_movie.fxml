@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/10.0.2-internal" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.mana.controller.AddMoviesController">
+   <children>
+        <VBox alignment="TOP_RIGHT" prefHeight="393.0" prefWidth="325.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+            <children>
+                <HBox alignment="CENTER_RIGHT" prefHeight="100.0" prefWidth="200.0">
+                    <children>
+                        <Label text="Poster:" />
+                        <Button mnemonicParsing="false" onAction="#chooseImage" prefWidth="200.0" text="Choose Image...">
+                     <HBox.margin>
+                        <Insets left="15.0" />
+                     </HBox.margin>
+                  </Button>
+                    </children>
+            </HBox>
+                <HBox alignment="TOP_RIGHT" prefHeight="100.0" prefWidth="200.0">
+                    <children>
+                        <Label text="Title:" />
+                        <TextField fx:id="titleField" prefWidth="200.0">
+                     <HBox.margin>
+                        <Insets left="15.0" />
+                     </HBox.margin>
+                  </TextField>
+                    </children>
+            </HBox>
+                <HBox alignment="TOP_RIGHT" layoutX="10.0" layoutY="206.0" prefHeight="100.0" prefWidth="200.0">
+                    <children>
+                        <Label text="Genre:" />
+                        <TextField fx:id="genreField" prefWidth="200.0">
+                     <HBox.margin>
+                        <Insets left="15.0" />
+                     </HBox.margin>
+                  </TextField>
+                    </children>
+                </HBox>
+                <HBox alignment="TOP_RIGHT" layoutX="10.0" layoutY="337.0" prefHeight="100.0" prefWidth="200.0">
+                    <children>
+                        <Label text="Rating:" />
+                  <ChoiceBox fx:id="ratingChoice" prefWidth="200.0">
+                     <HBox.margin>
+                        <Insets left="15.0" />
+                     </HBox.margin>
+                  </ChoiceBox>
+                    </children>
+                </HBox>
+                <HBox alignment="TOP_RIGHT" layoutX="10.0" layoutY="110.0" prefHeight="100.0" prefWidth="200.0">
+                    <children>
+                        <Label text="Director:" />
+                        <TextField fx:id="directorField" prefWidth="200.0" promptText="(comma separated values)">
+                     <HBox.margin>
+                        <Insets left="15.0" />
+                     </HBox.margin>
+                  </TextField>
+                    </children>
+                </HBox>
+                <HBox alignment="TOP_RIGHT" layoutX="10.0" layoutY="210.0" prefHeight="100.0" prefWidth="200.0">
+                    <children>
+                        <Label text="Writer(s):" />
+                        <TextField fx:id="writerField" prefWidth="200.0" promptText="(comma separated values)">
+                     <HBox.margin>
+                        <Insets left="15.0" />
+                     </HBox.margin>
+                  </TextField>
+                    </children>
+                </HBox>
+                <HBox alignment="TOP_RIGHT" layoutX="10.0" layoutY="206.0" prefHeight="100.0" prefWidth="200.0">
+                    <children>
+                        <Label text="Release date:" />
+                        <DatePicker fx:id="releaseDatePicker" prefWidth="200.0" promptText="use the button -&gt;">
+                     <HBox.margin>
+                        <Insets left="15.0" />
+                     </HBox.margin>
+                  </DatePicker>
+                    </children>
+                </HBox>
+                <HBox alignment="TOP_RIGHT" layoutX="10.0" layoutY="245.0" prefHeight="100.0" prefWidth="200.0">
+                    <children>
+                        <Label text="Runtime:" />
+                        <TextField fx:id="runtimeField" prefWidth="200.0" promptText="HH:MM:SS">
+                     <HBox.margin>
+                        <Insets left="15.0" />
+                     </HBox.margin>
+                  </TextField>
+                    </children>
+                </HBox>
+            <HBox alignment="TOP_RIGHT" layoutX="10.0" layoutY="353.0" prefHeight="100.0" prefWidth="200.0">
+               <children>
+                  <Label text="Cast:" />
+                  <TextArea fx:id="castArea" prefHeight="200.0" prefRowCount="6" prefWidth="200.0" promptText="(comma separated values)" wrapText="true">
+                     <HBox.margin>
+                        <Insets left="15.0" />
+                     </HBox.margin>
+                  </TextArea>
+               </children>
+            </HBox>
+            <HBox alignment="BOTTOM_RIGHT" prefHeight="100.0" prefWidth="200.0">
+               <children>
+                  <Button cancelButton="true" mnemonicParsing="false" onAction="#openMovies" text="Cancel" />
+                  <Button defaultButton="true" mnemonicParsing="false" onAction="#add" text="Add Movie">
+                     <HBox.margin>
+                        <Insets left="30.0" />
+                     </HBox.margin>
+                  </Button>
+               </children>
+            </HBox>
+            </children>
+        </VBox>
+   </children>
+   <padding>
+      <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+   </padding>
+</AnchorPane>
