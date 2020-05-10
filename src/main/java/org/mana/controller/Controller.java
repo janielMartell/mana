@@ -2,7 +2,6 @@ package org.mana.controller;
 
 import java.io.IOException;
 
-public interface Controller {
+public interface Controller extends IController {
     void showView() throws IOException;
-    String getView();
 }
