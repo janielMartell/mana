@@ -6,15 +6,13 @@ import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import org.mana.App;
 import org.mana.db.datasource.HikariCPDataSource;
-import org.mana.db.entity.City;
 import org.mana.db.entity.User;
-import org.mana.db.model.Model;
 import org.mana.db.model.UserModel;
 import org.mana.exception.UserNotFoundException;
+import org.mana.utils.CurrentUser;
 import org.mana.utils.FieldValidator;
 
 import java.io.IOException;
-import java.sql.Date;
 
 public class LoginController implements Controller {
     private final String view = "login.fxml";
@@ -36,10 +34,11 @@ public class LoginController implements Controller {
             alert.show();
             return;
         }
-        User user = null;
+
         try {
             UserModel userModel = new UserModel(new HikariCPDataSource());
-            user = userModel.findByUsernameAndPassword(username, password);
+            User user = userModel.findByUsernameAndPassword(username, password);
+            CurrentUser.setInstance(user);
         } catch (UserNotFoundException ex) {
             Alert alert = new Alert(Alert.AlertType.ERROR);
             alert.setHeaderText("The credentials don't match an account.");
@@ -52,8 +51,19 @@ public class LoginController implements Controller {
             return;
         }
 
-        if (user != null) {
-            // TODO: go to homescreen
+        Controller homepage;
+
+        if (CurrentUser.getInstance().role.name.equals("admin")) {
+            homepage = new AdminHomepageController();
+        } else {
+            homepage = new UserMoviesController();
+        }
+
+        try {
+            homepage.showView();
+        } catch (IOException ex) {
+            System.out.println(ex.getMessage());
+            ex.printStackTrace();
         }
     }
 
