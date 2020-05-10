@@ -43,7 +43,7 @@
                                 <VBox>
                                     <children>
                                         <Label alignment="BOTTOM_LEFT" maxWidth="300.0" styleClass="item-title" text="Date of Birth" />
-                                        <DatePicker fx:id="dobPicker" maxWidth="300.0" minWidth="300.0" prefWidth="300.0" promptText="m/d/yyyy" />
+                                        <DatePicker fx:id="dobPicker" maxWidth="300.0" minWidth="300.0" prefWidth="300.0" promptText="please, click the button -&gt;" />
                                     </children>
                                 </VBox>
                                 <VBox>
