@@ -1,6 +1,11 @@
 package org.mana.utils;
 
+import javafx.stage.FileChooser;
+
 public class FieldValidator {
+
+    public static final FileChooser.ExtensionFilter imageFilter =  new FileChooser.ExtensionFilter("Image Files", "*.jpg", "*.png");
+    public static final String timeRegex =  "\\d{2}\\:([0-5])([0-9])\\:([0-5])([0-9])";
 
     public void FieldValidator() {}
 
