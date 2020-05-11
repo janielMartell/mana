@@ -34,4 +34,8 @@ public class CurrentUser {
 
         INSTANCE = user;
     }
+
+    public static void destroyInstance() {
+        INSTANCE = null;
+    }
 }

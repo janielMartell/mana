@@ -1,9 +1,5 @@
 package org.mana.controller;
 
-import java.io.IOException;
-import java.sql.Date;
-import java.time.LocalDate;
-
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import org.mana.App;
@@ -14,13 +10,18 @@ import org.mana.db.entity.User;
 import org.mana.db.model.Model;
 import org.mana.db.model.UserModel;
 import org.mana.exception.EntityAlreadyExistsException;
+import org.mana.exception.EntityNotFoundException;
 import org.mana.utils.CurrentUser;
 import org.mana.utils.FieldValidator;
 
-public class RegisterController implements ParametrizedController<RegisterController> {
+import java.io.IOException;
+import java.sql.Date;
+import java.time.LocalDate;
 
-    private final String view = "register.fxml";
+public class EditUserController implements ParametrizedController<EditUserController> {
+    private final String view = "edit_user.fxml";
     private final Controller sourceController;
+    private final User user;
 
     @FXML
     TextField firstnameField;
@@ -37,37 +38,38 @@ public class RegisterController implements ParametrizedController<RegisterContro
     @FXML
     ChoiceBox roleChoice;
 
-    public RegisterController(Controller controller) {
+    public EditUserController(Controller controller, User user) {
         sourceController = controller;
-    }
-
-    @Override
-    public void showView(RegisterController controller) throws IOException {
-        App.setRoot(this.view, controller);
-    }
-
-    @Override
-    public String getView() {
-        return this.view;
+        this.user = user;
     }
 
     @FXML
     private void initialize() {
         roleChoice.getItems().add("user");
 
+        firstnameField.setText(user.firstName);
+        lastnameField.setText(user.lastName);
+        cityField.setText(user.getCityName());
+        dobPicker.setValue(user.dob.toLocalDate());
+        usernameField.setText(user.username);
+        roleChoice.setValue(user.getRoleName());
+
+        if (CurrentUser.getInstance().getRoleName().equals("admin"))
+            roleChoice.getItems().add("admin");
+    }
+
+    @FXML
+    private void goBack() {
         try {
-            User currentUser = CurrentUser.getInstance();
-
-            if (currentUser.getRoleName().equals("admin"))
-                roleChoice.getItems().add("admin");
-
-        } catch (IllegalStateException ex) {
+            sourceController.showView();
+        } catch (IOException ex) {
+            System.out.println(ex.getMessage());
             ex.printStackTrace();
         }
     }
 
     @FXML
-    private void register() {
+    private void update() {
         FieldValidator validator = new FieldValidator();
 
         String firstName = firstnameField.getText();
@@ -101,17 +103,8 @@ public class RegisterController implements ParametrizedController<RegisterContro
         }
 
         try {
-            Model userModel = new UserModel(new HikariCPDataSource());
-            userModel.save(new User(username, password, firstName, lastName, Date.valueOf(dob), new City(cityName), new Role(role)));
-        } catch (EntityAlreadyExistsException ex) {
-            Alert alert = new Alert(Alert.AlertType.ERROR);
-            alert.setHeaderText("UsernameTaken");
-            alert.show();
-
-            ex.printStackTrace();
-            System.out.println(ex.getMessage());
-
-            return;
+            UserModel userModel = new UserModel(new HikariCPDataSource());
+            userModel.update(new User(user.id, username, password, firstName, lastName, Date.valueOf(dob), new City(cityName), new Role(role)));
         } catch (Exception ex) {
             Alert alert = new Alert(Alert.AlertType.ERROR);
             alert.setHeaderText("Something went wrong! Try again later.");
@@ -126,13 +119,13 @@ public class RegisterController implements ParametrizedController<RegisterContro
         goBack();
     }
 
-    @FXML
-    private void goBack(){
-        try {
-            sourceController.showView();
-        } catch (IOException ex) {
-            System.out.println(ex.getMessage());
-            ex.printStackTrace();
-        }
+    @Override
+    public void showView(EditUserController controller) throws IOException {
+        App.setRoot(this.view, controller);
+    }
+
+    @Override
+    public String getView() {
+        return view;
     }
 }

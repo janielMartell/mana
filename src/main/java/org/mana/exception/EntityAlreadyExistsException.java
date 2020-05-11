@@ -1,6 +1,6 @@
 package org.mana.exception;
 
-public class EntityAlreadyExistsException extends Exception {
+public class EntityAlreadyExistsException extends EntityException {
     /**
      * Constructs a {@code EntityAlreadyExistsException} with no detail message.
      */

@@ -51,6 +51,39 @@ public class User implements Entity {
         this.role = role;
     }
 
-    public User() {
+    public int getId() {
+        return id;
+    }
+
+    public String getUsername() {
+        return username;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public String getFirstName() {
+        return firstName;
+    }
+
+    public String getLastName() {
+        return lastName;
+    }
+
+    public Date getDob() {
+        return dob;
+    }
+
+    public String getCityName() {
+        return city.name;
+    }
+
+    public String getRoleName() {
+        return role.name;
+    }
+
+    public String getFullName() {
+        return String.format("%s %s", this.firstName, this.lastName);
     }
 }

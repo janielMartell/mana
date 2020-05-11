@@ -69,10 +69,10 @@ public class LoginController implements Controller {
 
     @FXML
     private void openRegister() throws IOException {
-        Controller register = new RegisterController();
+        ParametrizedController register = new RegisterController(new LoginController());
 
         try {
-            register.showView();
+            register.showView(register);
         } catch (IOException ex) {
             System.out.println(ex.getMessage());
             ex.printStackTrace();
