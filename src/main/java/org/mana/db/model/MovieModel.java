@@ -1,15 +1,13 @@
 package org.mana.db.model;
 
 import org.mana.db.datasource.DataSource;
-import org.mana.db.entity.Genre;
-import org.mana.db.entity.Movie;
-import org.mana.db.entity.Rating;
+import org.mana.db.entity.*;
 import org.mana.exception.EntityNotFoundException;
+import org.mana.exception.UserNotFoundException;
 
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.List;
 
 public class MovieModel implements Model<Movie> {
     private DataSource ds;
@@ -80,10 +78,52 @@ public class MovieModel implements Model<Movie> {
         }
     }
 
+    @Override
     public Collection<Movie> findAll() {
 
         final String query = "{ call get_movies() }";
-        Collection<Movie> movies = new ArrayList<Movie>();
+        Collection<Movie> movies = new ArrayList<>();
+
+        try (Connection con = ds.getConnection(); PreparedStatement statement = con.prepareCall(query)) {
+            ResultSet rs = statement.executeQuery();
+
+            while (rs.next()) {
+                movies.add(
+                        new Movie(
+                                rs.getInt("id"),
+                                rs.getString("title"),
+                                rs.getBinaryStream("poster"),
+                                rs.getString("director"),
+                                rs.getString("writer"),
+                                rs.getDate("release_date"),
+                                rs.getTime("length"),
+                                rs.getString("cast"),
+                                new Rating(
+                                        rs.getInt("rating_id"),
+                                        rs.getString("rating_name"),
+                                        rs.getString("rating_description")
+                                ),
+                                new Genre(
+                                        rs.getInt("genre_id"),
+                                        rs.getString("genre_name")
+                                )
+                        )
+                );
+            }
+
+            rs.close();
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+            System.out.println(ex.getMessage());
+        }
+
+        return movies;
+    }
+
+    public Collection<Movie> findAllAvailable() {
+
+        final String query = "{ call get_available_movies() }";
+        Collection<Movie> movies = new ArrayList<>();
 
         try (Connection con = ds.getConnection(); PreparedStatement statement = con.prepareCall(query)) {
             ResultSet rs = statement.executeQuery();
@@ -141,5 +181,46 @@ public class MovieModel implements Model<Movie> {
         } catch (NullPointerException ex) {
             ex.printStackTrace();
         }
+    }
+
+    public Movie findById(int id) throws EntityNotFoundException {
+        final String query = "{ call get_movie_by_id(?) }";
+
+        try (Connection con = ds.getConnection(); PreparedStatement statement = con.prepareCall(query)) {
+            statement.setInt(1, id);
+
+            ResultSet rs = statement.executeQuery();
+
+            if (rs.next()) {
+
+                return new Movie(
+                        rs.getInt("id"),
+                        rs.getString("title"),
+                        rs.getBinaryStream("poster"),
+                        rs.getString("director"),
+                        rs.getString("writer"),
+                        rs.getDate("release_date"),
+                        rs.getTime("length"),
+                        rs.getString("cast"),
+                        new Rating(
+                                rs.getInt("rating_id"),
+                                rs.getString("rating_name"),
+                                rs.getString("rating_description")
+                        ),
+                        new Genre(
+                                rs.getInt("genre_id"),
+                                rs.getString("genre_name")
+                        )
+                );
+
+            } else {
+                throw new EntityNotFoundException();
+            }
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+            System.out.println(ex.getMessage());
+        }
+
+        return null;
     }
 }
