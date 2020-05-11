@@ -84,7 +84,7 @@ public class UserModel implements Model<User> {
     }
 
     public User findByUsernameAndPassword(String username, String password) throws UserNotFoundException, SQLException {
-        final String query = "{ call mana.get_user_by_username_and_password(?, ?) }";
+        final String query = "{ call get_user_by_username_and_password(?, ?) }";
 
         try (Connection con = ds.getConnection(); PreparedStatement statement = con.prepareCall(query)) {
             statement.setString(1, username);
